@@ -1,0 +1,108 @@
+-- Crear la base de datos
+CREATE DATABASE bddonnato;
+USE bddonnato;
+
+-- Crear tabla Cliente
+CREATE TABLE cliente (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    telefono VARCHAR(15),
+    direccion VARCHAR(255),
+    fechaRegistro DATE
+);
+
+-- Crear tabla Mesa
+CREATE TABLE mesa (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    numero INT NOT NULL,
+    capacidad INT NOT NULL,
+    ubicacion VARCHAR(100),
+    estado ENUM('Disponible', 'Ocupada', 'Reservada') NOT NULL
+);
+
+-- Crear tabla Plato
+CREATE TABLE plato (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    descripcion TEXT,
+    precio DECIMAL(10, 2) NOT NULL,
+    categoria ENUM('Entrante', 'Plato Principal', 'Postre') NOT NULL
+);
+
+-- Crear tabla Orden
+CREATE TABLE orden (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    clienteId INT,
+    mesaId INT,
+    fechaOrden DATE NOT NULL,
+    total DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (clienteId) REFERENCES cliente(id),
+    FOREIGN KEY (mesaId) REFERENCES mesa(id)
+);
+
+-- Crear tabla DetalleOrden
+CREATE TABLE detalleorden (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ordenId INT,
+    platoId INT,
+    cantidad INT NOT NULL,
+    subtotal DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (ordenId) REFERENCES orden(id),
+    FOREIGN KEY (platoId) REFERENCES plato(id)
+);
+
+-- Insertar datos en la tabla Cliente
+INSERT INTO cliente (nombre, email, telefono, direccion, fechaRegistro) VALUES
+('Juan Pérez', 'juan@example.com', '123456789', 'Calle 1', '2023-01-01'),
+('Maria López', 'maria@example.com', '987654321', 'Calle 2', '2023-01-02'),
+('Carlos García', 'carlos@example.com', '111222333', 'Calle 3', '2023-01-03'),
+('Ana Martínez', 'ana@example.com', '444555666', 'Calle 4', '2023-01-04'),
+('Laura Fernández', 'laura@example.com', '777888999', 'Calle 5', '2023-01-05'),
+('Pedro Sánchez', 'pedro@example.com', '000111222', 'Calle 6', '2023-01-06'),
+('Lucía Rodríguez', 'lucia@example.com', '333444555', 'Calle 7', '2023-01-07'),
+('Jorge Romero', 'jorge@example.com', '666777888', 'Calle 8', '2023-01-08');
+
+-- Insertar datos en la tabla Mesa
+INSERT INTO mesa (numero, capacidad, ubicacion, estado) VALUES
+(1, 4, 'Esquina', 'Disponible'),
+(2, 2, 'Centro', 'Ocupada'),
+(3, 6, 'Terraza', 'Reservada'),
+(4, 4, 'Ventana', 'Disponible'),
+(5, 8, 'Patio', 'Ocupada'),
+(6, 2, 'Cerca de la barra', 'Disponible'),
+(7, 4, 'Fondo', 'Reservada'),
+(8, 2, 'Entrada', 'Disponible');
+
+-- Insertar datos en la tabla Plato
+INSERT INTO plato (nombre, descripcion, precio, categoria) VALUES
+('Ensalada César', 'Ensalada con pollo, lechuga y aderezo César', 8.50, 'Entrante'),
+('Pizza Margherita', 'Pizza con salsa de tomate, mozzarella y albahaca', 12.00, 'Plato Principal'),
+('Sopa de Tomate', 'Sopa caliente de tomate y albahaca', 6.00, 'Entrante'),
+('Pasta Carbonara', 'Pasta con salsa de huevo, panceta y queso', 14.00, 'Plato Principal'),
+('Tarta de Chocolate', 'Tarta de chocolate con crema', 5.00, 'Postre'),
+('Hamburguesa', 'Hamburguesa con carne, lechuga y tomate', 10.00, 'Plato Principal'),
+('Galletas', 'Galletas caseras de chocolate', 2.50, 'Postre'),
+('Tacos', 'Tacos con carne asada y guacamole', 9.00, 'Plato Principal');
+
+-- Insertar datos en la tabla Orden
+INSERT INTO orden (clienteId, mesaId, fechaOrden, total) VALUES
+(1, 1, '2023-10-01', 22.50),
+(2, 2, '2023-10-02', 18.00),
+(3, 3, '2023-10-03', 20.00),
+(4, 4, '2023-10-04', 25.00),
+(5, 5, '2023-10-05', 30.00),
+(6, 6, '2023-10-06', 15.00),
+(7, 7, '2023-10-07', 28.00),
+(8, 8, '2023-10-08', 17.00);
+
+-- Insertar datos en la tabla DetalleOrden
+INSERT INTO detalleorden (ordenId, platoId, cantidad, subtotal) VALUES
+(1, 1, 1, 8.50),
+(1, 2, 1, 12.00),
+(2, 3, 2, 12.00),
+(3, 4, 1, 14.00),
+(4, 5, 1, 5.00),
+(5, 6, 1, 10.00),
+(6, 7, 2, 5.00),
+(7, 8, 2, 18.00);
