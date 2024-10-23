@@ -1,0 +1,62 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+
+           xmlns:tns="http://www.cibertec.edu.pe/ws/objects/mesa"
+           targetNamespace="http://www.cibertec.edu.pe/ws/objects/mesa"
+           elementFormDefault="qualified">
+    <xs:complexType name="mesaws">
+        <xs:sequence>
+            <xs:element name="idmesa" type="xs:int"/>
+            <xs:element name="numero" type="xs:int"/>
+            <xs:element name="capacidad" type="xs:int"/>
+            <xs:element name="ubicacion" type="xs:string"/>
+            <xs:element name="estado" type="xs:boolean"/>
+
+        </xs:sequence>
+
+    </xs:complexType>
+    <xs:element name="getMesasRequest">
+        <xs:complexType>
+            <xs:sequence/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getMesasResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="mesa"
+                            type="tns:mesaws" maxOccurs="unbounded" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getMesaRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element  name="id" type="xs:int"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="getMesaResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="mesa" type="tns:mesaws" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="postMesaRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="mesa" type="tns:mesaws" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="postMesaResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="mesa" type="tns:mesaws" />
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

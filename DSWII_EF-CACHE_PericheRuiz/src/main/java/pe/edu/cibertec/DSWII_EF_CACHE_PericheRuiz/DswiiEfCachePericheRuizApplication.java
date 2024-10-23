@@ -1,0 +1,16 @@
+package pe.edu.cibertec.DSWII_EF_CACHE_PericheRuiz;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
+
+
+@SpringBootApplication
+@EnableCaching
+public class DswiiEfCachePericheRuizApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(DswiiEfCachePericheRuizApplication.class, args);
+	}
+
+}
